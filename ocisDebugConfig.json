@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch"
+        },
+        {
+            "name": "Debug remote :40000",
+            "type": "go",
+            "request": "attach",
+            "mode": "remote",
+            "port": 40000
+        },
+        {
+            "name": "oCIS server",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/ocis/cmd/ocis",
+            "args": [
+                "server"
+            ],
+            "env": {
+                // log settings for human developers
+                "OCIS_LOG_LEVEL": "debug",
+                "OCIS_LOG_PRETTY": "true",
+                "OCIS_LOG_COLOR": "true",
+                // set insecure options because we don't have valid certificates in dev environments
+                "OCIS_INSECURE": "true",
+                // enable basic auth for dev setup so that we can use curl for testing
+                "PROXY_ENABLE_BASIC_AUTH": "true",
+
+                "PROXY_HTTP_ADDR":"0.0.0.0:9200",
+                "OCIS_URL":"https://host.docker.internal:9200",
+
+                "PROXY_TRANSPORT_TLS_KEY":"/home/sabin/www/ocis.pem",
+                "PROXY_TRANSPORT_TLS_CERT":"/home/sabin/www/ocis.crt",
+            }
+        }
+    ]
+}
